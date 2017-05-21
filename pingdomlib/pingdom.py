@@ -37,7 +37,7 @@ class Pingdom(object):
     def _serializeBooleans(params):
         """"Convert all booleans to lowercase strings"""
         serialized = {}
-        for name, value in params.items():
+        for name, value in list(params.items()):
             if value is True:
                 value = 'true'
             elif value is False:
@@ -45,7 +45,7 @@ class Pingdom(object):
             serialized[name] = value
         return serialized
 
-        for k, v in params.items():
+        for k, v in list(params.items()):
             if isinstance(v, bool):
                 params[k] = str(v).lower()
 
@@ -574,7 +574,7 @@ class Pingdom(object):
             raise Exception("Invalid checktype in newCheck()")
 
         parameters = {'name': name, 'host': host, 'type': checktype}
-        for key, value in kwargs.iteritems():
+        for key, value in kwargs.items():
             parameters[key] = value
 
         checkinfo = self.request("POST", 'checks', parameters)
@@ -980,7 +980,7 @@ class Pingdom(object):
             raise Exception("Invalid checktype in singleTest()")
 
         parameters = {'host': host, 'type': checktype}
-        for key, value in kwargs.iteritems():
+        for key, value in kwargs.items():
             parameters[key] = value
 
         checkinfo = self.request('GET', "single", parameters)
@@ -1207,7 +1207,7 @@ class Pingdom(object):
                                  'of newEmailReport()\n')
 
         parameters = {'name': name}
-        for key, value in kwargs.iteritems():
+        for key, value in kwargs.items():
             parameters[key] = value
 
         return self.request('POST', 'reports.email',
@@ -1279,7 +1279,7 @@ class Pingdom(object):
                                  'of newSharedReport()\n')
 
         parameters = {'checkid': checkid, 'sharedtype': 'banner'}
-        for key, value in kwargs.iteritems():
+        for key, value in kwargs.items():
             parameters[key] = value
 
         return self.request('POST', 'reports.shared',
